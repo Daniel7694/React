@@ -1,42 +1,44 @@
 import ProductCategoryRow from "./ProductCategoryRow.jsx";
 import ProductRow from "./ProductRow.jsx";
-
 function ProductTable({products}){
-    const row = [];
+    const rows = [];
     let lastCategory = null;
 
-    products.forEach((product) => {
-        if (product.category !== lastCategory){
-            row.push(
-                <ProductCategoryRow
-                    category={ product.category}
-                    key={product.category}
-                />
+    products.forEach( (product) => {
+            if (product.category !== lastCategory) {
+                rows.push(
+                    <ProductCategoryRow
+                        category={product.category}
+                        key={product.category}/>
+                );
+            }
+            rows.push(
+                <ProductRow
+                    product={product }
+                    key={ product.name}/>
             );
-        }
-        row.push(
-            <ProductRow
-                product={product}
-                key={product.name}
-            />
-        );
-        return(
-            <>
-                <table>
-                    <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Price</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {row}
-                    </tbody>
-                </table>
-            </>
-        );
+            lastCategory = product.category
         }
 
-    )
+    );
+
+    return(
+        <>
+            <table>
+                <thead>
+                <tr>
+                    <th>
+                        <th>Name</th>
+                        <th>Price</th>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                {rows}
+                </tbody>
+            </table>
+        </>
+    );
 }
+
 export default ProductTable;
